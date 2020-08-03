@@ -9,7 +9,9 @@ const searchPokemon = async (pokemonId) => {
   searchInput.value="";
   searchInput.focus();
 } catch(err){
-  alert("not found")
+  let notFound = document.createElement("div");
+  notFound.innerHTML="Pokemon not found!";
+  pokemonDiv.appendChild(notFound);
 }
 };
 
