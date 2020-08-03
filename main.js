@@ -2,13 +2,15 @@ const searchInput = document.getElementById("search");
 const searchButton = document.getElementById("searchButton");
 const pokemonDiv = document.getElementById("pokemonDiv");
 
-const searchPokemon = async (pokemonId) => {
+const searchPokemon = async (pokemonId) => { 
+  try{
   const { data } = await axios.get(`http://pokeapi.co/api/v2/pokemon/${pokemonId}`);
-  console.log("name: " + data.name);
-  console.log("Height: " + data.height);
-  console.log("weight: " + data.weight);
-  console.log("weight: " + data.sprites.front_default);
   makeDiv(data.name, data.height, data.weight,data.sprites.front_default, data.sprites.back_default);
+  searchInput.value="";
+  searchInput.focus();
+} catch(err){
+  alert("not found")
+}
 };
 
 const makeDiv = (name, height, weight, picture, pictureBack) => {
@@ -21,7 +23,6 @@ const makeDiv = (name, height, weight, picture, pictureBack) => {
   nameDiv.innerHTML ="Name: " + name;
   heightDiv.innerHTML = "Height: " + height;
   weightDiv.innerHTML = "Weight: " + weight;
-  pictureDiv.innerHTML = picture;
 
   pokemonDiv.appendChild(nameDiv);
   pokemonDiv.appendChild(heightDiv);
@@ -31,8 +32,6 @@ const makeDiv = (name, height, weight, picture, pictureBack) => {
   pictureDiv.onmouseover=()=>pictureDiv.src=pictureBack;
   pictureDiv.onmouseout=()=>pictureDiv.src=picture;
 }
-
-
 
 searchButton.addEventListener("click", () => {
   searchPokemon(searchInput.value);
