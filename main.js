@@ -7,7 +7,6 @@ const searchPokemon = async (pokemonId) => {
   const { data } = await axios.get(`http://pokeapi.co/api/v2/pokemon/${pokemonId}`);
   //const { types } = await axios.get(`https://pokeapi.co/api/v2/type/${pokemonId}`);
   makeDiv(data.name, data.height, data.weight,data.sprites.front_default, data.sprites.back_default, data.types);
-  console.log(data.types);
   searchInput.value="";
   searchInput.focus();
 } catch(err){
@@ -33,10 +32,11 @@ const makeDiv = (name, height, weight, picture, pictureBack, types) => {
   for (let i=0; i< types.length; i++){
     let typeName = types[i].type.name;
     let typeUrl = types[i].type.url;
-    let liElement = document.createElement('li');
-    typesDiv.appendChild(liElement);
-    const htmlTextTypes = `<a href= "#" , onclick='sameTypePokemons(${typeUrl})'> ${typeName} </a>`;
-    liElement.innerHTML= htmlTextTypes;
+    let sameTypePokemons = types[i].name;
+    let liType = document.createElement('li');
+    typesDiv.appendChild(liType);
+    const htmlTextTypes = `<a href= "#" , onclick="${typeUrl}" > ${typeName} </a>`;
+    liType.innerHTML= htmlTextTypes;
   }
 
   pokemonDiv.appendChild(nameDiv);
