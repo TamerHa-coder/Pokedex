@@ -5,7 +5,7 @@
 }
 
 body {
-    background-color: lightblue;
+    background-image: url("https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/d07eaebd-9ec8-4032-8a02-7f85abb4ac44/d8oalkw-cbd821cd-6461-4f53-9eb6-9b3e296f0ba2.png");
     color: black;
     font-family:"Indie Flower", sans-serif ;
     min-height: 100vh;
@@ -13,19 +13,90 @@ body {
     width: 50%;
     padding: 10px;
     text-justify: center;
-text-align: center;
+    text-align: center;
     border: 3px solid black;
-    border-radius: 25px
+    border-radius: 25px;
+    font-weight: bold;
+    
 }
-h1, .input{
+h1{
     text-justify: center;
     text-align: center;
     border: 3px solid black;
-    border-radius: 25px
+    border-radius: 25px;
+    font-size: 50px;
 }
-#pokemonDiv{
+h2{
+    font-size: 40px;
+}
+
+
+.pokemonContainer{
+ font-size: 26px;
+}
+
+#searchButton {
+    background-image: url(https://img.icons8.com/pastel-glyph/64/000000/search--v2.png);
+    background-size: 100%;
+    background-color: white;
+    background-repeat: no-repeat;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+#searchButton:hover{
+    width: 20px;
+    height: 20px;
+    background-color: rgba(245, 245, 245, 0.911);
+}
+
+
+.pokemonTypesList{
+    grid-area: types;   
     font-size: 22px;
+    text-justify: center;
+    text-align: center;
+    display: flex;
     font-weight: bold;
 }
+.pokemonType{
+    list-style: none;
+    font-weight: bold;
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    border-radius: 5px;
+    height: 40px;
+    width: 100px;
+    font-size: 22px;
+    cursor:pointer;
+}
 
+.pokemonType:hover{
+    background-color: #73e0ff;
+}
 
+.pokemonList{
+    text-align: left;
+    position: absolute;
+    background-color: #73e0ff;
+    border: 2px solid black;
+    margin: 0px 0px 0px 300px;
+    overflow:hidden; 
+    overflow-y:scroll;
+    height:200px;
+    width:18%;
+
+}
+.pokemonListItem{
+    cursor:pointer;
+    list-style: none;
+    font-size: 22px;
+    margin: 0px 0px 0px -35px;
+    text-justify: center;
+    text-align: center;
+}
+
+.pokemonListItem:hover{
+    background-color: wheat;
+    border: 1px solid black;
+}

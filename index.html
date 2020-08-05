@@ -3,15 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokedex</title>
     <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="CSS.css">
+    <link rel="stylesheet" href="CSS.css">
+    <title>Pokedex</title>
 </head>
 <body>
   <h1>Pokedex</h1>
-  <input id="search" /><button id="searchButton">Search</button>
-  <div id="pokemonDiv">
-  </div>
+  <h2>Enter Pokemon</h2>
+  <section id = "pokedex">
+  <input id="search" />
+  <button id="searchButton" ></button>
+  <div id="results"></div>
+</section>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script> <!-- todo later: use a local copy installed via npm -->
   <script src="./main.js"></script>  <!-- todo: change to type:module -->
 </body>

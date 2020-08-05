@@ -1,59 +1,76 @@
-const searchInput = document.getElementById("search");
-const searchButton = document.getElementById("searchButton");
-const pokemonDiv = document.getElementById("pokemonDiv");
-
-const searchPokemon = async (pokemonId) => { 
-  try{
-  const { data } = await axios.get(`http://pokeapi.co/api/v2/pokemon/${pokemonId}`);
-  //const { types } = await axios.get(`https://pokeapi.co/api/v2/type/${pokemonId}`);
-  makeDiv(data.name, data.height, data.weight,data.sprites.front_default, data.sprites.back_default, data.types);
-  searchInput.value="";
-  searchInput.focus();
-} catch(err){
-  let notFound = document.createElement("div");
-  notFound.innerHTML="Pokemon not found!";
-  pokemonDiv.appendChild(notFound);
+function getPokemon(pokeIdentifier) {
+  axios.defaults.baseURL = 'https://pokeapi.co/api/v2';
+  let temperror = axios.get(pokeIdentifier)
+    .then(response => response.data)
+    .catch(() => { addChild(resultsArea, "notfound" , "Pokemon not found", newPokemon)})
+    return temperror;
 }
+
+async function showPokemon(searchValue) {
+  if (typeof searchValue !== typeof "") { searchValue = searchBoxValue.value.toLowerCase() };
+  if (searchValue === "") { return };
+
+  const data = await getPokemon(`/pokemon/${searchValue}`)
+  let pokemonTypes = [];
+  let urlListSameType = [];
+try{
+  data.types.forEach(element => {
+    pokemonTypes.push(element.type.name);
+    urlListSameType.push(element.type.url);
+  })} catch {return }
+
+  createNewPokemon(data.name, data.height, data.weight, data.sprites.front_default, data.sprites.back_default, pokemonTypes, urlListSameType);
+  searchBoxValue.value = "";
+  searchBoxValue.focus();
 };
 
-const makeDiv = (name, height, weight, picture, pictureBack, types) => {
-  let nameDiv = document.createElement("div");
-  let heightDiv = document.createElement("div");
-  let weightDiv = document.createElement("div");
-  let pictureDiv = document.createElement("img");
-  let typesDiv = document.createElement("div");
-  pictureDiv.src=picture;
+const searchButton = document.getElementById('searchButton');
+const searchBoxValue = document.getElementById('search');
+const resultsArea = document.getElementById('results');
+const newPokemon = document.createElement('div');
+const pokemonName = document.createElement('div');
+const pokemonHeight = document.createElement('div');
+const pokemonWeight = document.createElement('div');
+const pokemonImage = document.createElement('img');
+const pokemonTypesList = document.createElement('ul');
+const pokemonListSameType = document.createElement('ul');
 
-  nameDiv.innerHTML ="Name: " + name;
-  heightDiv.innerHTML = "Height: " + height;
-  weightDiv.innerHTML = "Weight: " + weight;
-  typesDiv.innerHTML = "Type: ";
+function addChild(parent, className, text, child) {
+  parent.appendChild(child);
+  child.className = className;
+  child.textContent =  capitalizeFirstLetter(text);
+  return child;
+};
 
-  for (let i=0; i< types.length; i++){
-    let typeName = types[i].type.name;
-    let typeUrl = types[i].type.url;
-    let sameTypePokemons = types[i].name;
-    let liType = document.createElement('li');
-    typesDiv.appendChild(liType);
-    const htmlTextTypes = `<a href= "#" , onclick="${typeUrl}" > ${typeName} </a>`;
-    liType.innerHTML= htmlTextTypes;
-  }
+function createNewPokemon(name, height, weight, image, over, types, typesList) {
+  addChild(resultsArea, `pokemonContainer`, null, newPokemon);
+  addChild(newPokemon, `pokemonsname`, "Name: " + name.charAt(0).toUpperCase() + name.slice(1), pokemonName);
+  addChild(newPokemon, `pokemonsheight`, "Height: " + height, pokemonHeight);
+  addChild(newPokemon, `pokemonsweight`, "Weight: " + weight, pokemonWeight);
+  addChild(newPokemon, `pokemonsimage`, null, pokemonImage);
+  addChild(newPokemon, `pokemonTypesList`, `Types:`, pokemonTypesList);
+  types.forEach(element => {
+    const pokemonType = document.createElement('li');
+    addChild(pokemonTypesList, `pokemonType`, element, pokemonType);
+    pokemonType.onclick = async () => {
+      addChild(pokemonTypesList, "pokemonList", "pokemons from the same type: ", pokemonListSameType);
+      let po = await axios.get(typesList[types.indexOf(element)]);
+      po.data.pokemon.forEach(element => {
+        const pokemon = document.createElement('li');
+        addChild(pokemonListSameType, "pokemonListItem", element.pokemon.name, pokemon);
+        pokemon.addEventListener("click", () => showPokemon(element.pokemon.name));
+      });
+    };
+  });
 
-  pokemonDiv.appendChild(nameDiv);
-  pokemonDiv.appendChild(heightDiv);
-  pokemonDiv.appendChild(weightDiv);
-  pokemonDiv.appendChild(pictureDiv);
-  pokemonDiv.appendChild(typesDiv);
-
-  pictureDiv.onmouseover=()=>pictureDiv.src=pictureBack;
-  pictureDiv.onmouseout=()=>pictureDiv.src=picture;
+  pokemonImage.src = image;
+  pokemonImage.onmouseover = () => pokemonImage.src = over;
+  pokemonImage.onmouseleave = () => pokemonImage.src = image;
 }
-
-searchButton.addEventListener("click", () => {
-  searchPokemon(searchInput.value);
-});
-
-
-
-
-
+function capitalizeFirstLetter(string) {
+  if(typeof string === typeof ""){
+  let newString = string.charAt(0).toUpperCase() + string.slice(1);
+  return newString
+}
+}
+searchButton.addEventListener('click', showPokemon);
