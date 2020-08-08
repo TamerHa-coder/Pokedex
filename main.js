@@ -44,10 +44,10 @@ function addChild(parent, className, text, child) {
 
 function createNewPokemon(name, height, weight, image, over, types, typesList) {
   addChild(resultsArea, `pokemonContainer`, null, newPokemon);
-  addChild(newPokemon, `pokemonsname`, "Name: " + name.charAt(0).toUpperCase() + name.slice(1), pokemonName);
-  addChild(newPokemon, `pokemonsheight`, "Height: " + height, pokemonHeight);
-  addChild(newPokemon, `pokemonsweight`, "Weight: " + weight, pokemonWeight);
-  addChild(newPokemon, `pokemonsimage`, null, pokemonImage);
+  addChild(newPokemon, `pokemonName`, "Name: " + name.charAt(0).toUpperCase() + name.slice(1), pokemonName);
+  addChild(newPokemon, `pokemonHeight`, "Height: " + height, pokemonHeight);
+  addChild(newPokemon, `pokemonWeight`, "Weight: " + weight, pokemonWeight);
+  addChild(newPokemon, `pokemonImage`, null, pokemonImage);
   addChild(newPokemon, `pokemonTypesList`, `Types:`, pokemonTypesList);
   types.forEach(element => {
     const pokemonType = document.createElement('li');

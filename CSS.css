@@ -30,6 +30,10 @@ h2{
     font-size: 40px;
 }
 
+.pokemonImage {
+    width: 20%;
+    height: auto;
+  }
 
 .pokemonContainer{
  font-size: 26px;
@@ -83,7 +87,7 @@ h2{
     margin: 0px 0px 0px 300px;
     overflow:hidden; 
     overflow-y:scroll;
-    height:200px;
+    height:350px;
     width:18%;
 
 }
