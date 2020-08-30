@@ -13,7 +13,7 @@ async function showPokemon(searchValue) {
   const data = await getPokemon(`/pokemon/${searchValue}`)
   let pokemonTypes = [];
   let urlListSameType = [];
-try{
+  try{
   data.types.forEach(element => {
     pokemonTypes.push(element.type.name);
     urlListSameType.push(element.type.url);
